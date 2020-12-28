@@ -266,12 +266,16 @@ def print_data(df, city, month, day):
 
 
 def main():
+    """
+    This is the main entry point of the script.
+    """
+    
     while True:
 
         clear()
-
+        # get user input
         city, month, day = get_filters()
-
+        # calculate stats and display data
         df = load_data(city, month, day)
         time_stats(df)
         station_stats(df)
@@ -286,6 +290,6 @@ def main():
         if restart in ['no', 'n']:
             break
 
-
+# the "pythonic way" of C-like main(), yikes
 if __name__ == "__main__":
 	main()
