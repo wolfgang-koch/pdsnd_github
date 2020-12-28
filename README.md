@@ -15,3 +15,6 @@ This project relies on three files provided by Udacity:
 1. chicago.csv
 2. new_york_city.csv
 3. washington.csv
+
+### Credits
+This repo is forked from [Udacity's template repo](https://github.com/udacity/pdsnd_github).  :information_source:
