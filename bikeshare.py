@@ -132,15 +132,15 @@ def time_stats(df):
     # display the most common month
     # create temp data series of month number and count
     temp=df.groupby(['month'])['month'].count()
-    print("\tMost common month: {}/{}".format(MONTH_DATA[temp.index[temp.argmax()]].title(), temp.index[temp.argmax()]))
+    print("\tMost common month: {}/{}".format(MONTH_DATA[temp.idxmax()].title(), temp.idxmax()))
     # display the most common day of week
     # create temp data series of day of week and count
     temp=df.groupby(['dayofweek'])['dayofweek'].count()
-    print("\tMost common day of week: {}/{}".format(DAY_DATA[temp.index[temp.argmax()]].title(), temp.index[temp.argmax()]))
+    print("\tMost common day of week: {}/{}".format(DAY_DATA[temp.idxmax()].title(), temp.idxmax()))
     # display the most common start hour
     # create temp data series of start hour and count
     temp=df.groupby(['hour'])['hour'].count()
-    print("\tMost common start hour: {}".format(temp.index[temp.argmax()]))
+    print("\tMost common start hour: {}".format(temp.idxmax()))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*50+'\n')
