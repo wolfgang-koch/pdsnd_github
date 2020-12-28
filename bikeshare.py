@@ -10,9 +10,9 @@ CITY_DATA = { 'chicago': 'chicago.csv',
               'washington': 'washington.csv',
               'new york': 'new_york_city.csv' }
 
-MONTH_DATA = { 1 : "january", 2: "february",
-              3 : "march", 4 : "april",
-              5 : "may", 6 : "june" }
+MONTH_DATA = { 1 : 'january', 2: 'february',
+              3 : 'march', 4 : 'april',
+              5 : 'may', 6 : 'june' }
 
 DAY_DATA = {0: 'monday', 1 : 'tuesday', 2: 'wednesday',
             3 : 'thursday', 4 : 'friday', 5: 'saturday', 6: 'sunday'}
@@ -41,7 +41,7 @@ def get_filters():
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     city=None
     while city not in CITY_DATA:
-        city=input("Enter the city you would like to investigate. Enter city name (Chicago, New York, Washington) or number (1, 2, 3).\n\tEnter city ['quit' to exit]: ").lower()
+        city=input("Enter the city you would like to investigate. Enter city name (Chicago, New York, Washington) or number (1, 2, 3).\n\tEnter city ['quit' to exit]: "'").lower()
         if city.isnumeric() and 1 <= int(city) <= 3:
             city=list(CITY_DATA.keys())[int(city)-1]
         if city=='quit':
@@ -107,8 +107,8 @@ def load_data(city, month, day):
         df = df[df['dayofweek']==day_num]
 
     # set col and index names
-    df.rename(columns={"Unnamed: 0" : "id"},inplace=True)
-    df.rename_axis("index",inplace=True)
+    df.rename(columns={'Unnamed: 0' : 'id'},inplace=True)
+    df.rename_axis('index',inplace=True)
 
     print('\nData loaded for {} and filtered by month={}/{} and weekday={}/{}'.format(city.title(), month, month_num, day, day_num))
     print('-'*50+'\n')
@@ -132,17 +132,17 @@ def time_stats(df):
     # display the most common month
     # create temp data series of month number and count
     temp=df.groupby(['month'])['month'].count()
-    print("\tMost common month: {}/{}".format(MONTH_DATA[temp.idxmax()].title(), temp.idxmax()))
+    print('\tMost common month: {}/{}'.format(MONTH_DATA[temp.idxmax()].title(), temp.idxmax()))
     # display the most common day of week
     # create temp data series of day of week and count
     temp=df.groupby(['dayofweek'])['dayofweek'].count()
-    print("\tMost common day of week: {}/{}".format(DAY_DATA[temp.idxmax()].title(), temp.idxmax()))
+    print('\tMost common day of week: {}/{}'.format(DAY_DATA[temp.idxmax()].title(), temp.idxmax()))
     # display the most common start hour
     # create temp data series of start hour and count
     temp=df.groupby(['hour'])['hour'].count()
-    print("\tMost common start hour: {}".format(temp.idxmax()))
+    print('\tMost common start hour: {}'.format(temp.idxmax()))
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('\nThis took %s seconds.' % (time.time() - start_time))
     print('-'*50+'\n')
 
 
@@ -158,17 +158,17 @@ def station_stats(df):
     start_time = time.time()
 
     # display most commonly used start station
-    print("\tMost common start station: {}".format(df['Start Station'].mode()[0]))
+    print('\tMost common start station: {}'.format(df['Start Station'].mode()[0]))
 
     # display most commonly used end station
-    print("\tMost common end station: {}".format(df['End Station'].mode()[0]))
+    print('\tMost common end station: {}'.format(df['End Station'].mode()[0]))
 
     # display most frequent combination of start station and end station trip
     # Note: i know this can be done using the value_counts() method, however i wanted to try grouping and selecting the top-most result
     temp=df.groupby(['Start Station', 'End Station']).size().sort_values(ascending=False)
-    print("\tMost common trip is: {} -> {} ({} rides) ".format(*temp.index[0], temp[0]))
+    print('\tMost common trip is: {} -> {} ({} rides) '.format(*temp.index[0], temp[0]))
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('\nThis took %s seconds.' % (time.time() - start_time))
     print('-'*50+'\n')
 
 
@@ -184,12 +184,12 @@ def trip_duration_stats(df):
     start_time = time.time()
 
     # display total travel time
-    print("\tTotal travel time: {}".format(pd.Timedelta(df['Trip Duration'].sum(), unit='seconds')))
+    print('\tTotal travel time: {}'.format(pd.Timedelta(df['Trip Duration'].sum(), unit='seconds')))
 
     # display mean travel time
-    print("\tMean travel time: {}".format(pd.Timedelta(df['Trip Duration'].mean(), unit='seconds')))
+    print('\tMean travel time: {}'.format(pd.Timedelta(df['Trip Duration'].mean(), unit='seconds')))
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('\nThis took %s seconds.' % (time.time() - start_time))
     print('-'*50+'\n')
 
 
@@ -205,25 +205,25 @@ def user_stats(df):
     start_time = time.time()
 
     # Display counts of user types
-    print("\tUsers by type:")
+    print('\tUsers by type:')
     for i,v in df.value_counts('User Type').items():
-        print("\t\t{}: {}".format(i,v))
+        print('\t\t{}: {}'.format(i,v))
 
     # Check if gender col is present in data. If yes, display counts of gender
     if 'Gender' in df.columns:
-        print("\tUsers by gender:")
+        print('\tUsers by gender:')
         for i,v in df.value_counts('Gender').items():
-            print("\t\t{}: {}".format(i,v))
+            print('\t\t{}: {}'.format(i,v))
     # Check if birth date col is present in data. If yes, display earliest, most recent, and most common year of birth
     if 'Birth Year' in df.columns:
-        print("\tUser's YOB stats:")
-        print("\t\tearliest: {:.0f}\n\t\tmost recent: {:.0f}\n\t\tmost common: {:.0f}".format(
+        print('\tUser's YOB stats:')
+        print('\t\tearliest: {:.0f}\n\t\tmost recent: {:.0f}\n\t\tmost common: {:.0f}'.format(
             df['Birth Year'].min(),
             df['Birth Year'].max(),
             df['Birth Year'].mode()[0] ))
 
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('\nThis took %s seconds.' % (time.time() - start_time))
     print('-'*50+'\n')
 
 def print_data(df, city, month, day):
@@ -252,7 +252,7 @@ def print_data(df, city, month, day):
         if showdata in ['no', 'n']:
             return
         # print raw data as well as current index position and applied filter
-        print("\nShowing rows {} to {} of {} total rows.\nFilter applied: city={}, month={}, day={}:\n".format(pos+1,pos+5 if pos+5<=df.index.size else df.index.size, df.index.size,city.title(),month,day))
+        print('\nShowing rows {} to {} of {} total rows.\nFilter applied: city={}, month={}, day={}:\n'.format(pos+1,pos+5 if pos+5<=df.index.size else df.index.size, df.index.size,city.title(),month,day))
         print(df.iloc[pos:pos+5 , :df.columns.size-3])
         print('-'*50+'\n')
         # setup local vars for next loop
@@ -260,7 +260,7 @@ def print_data(df, city, month, day):
         showdata=None
     else:
         # let user know if data frome is output completely and there is no more data to show
-        print("Reached end of file. No more data to show.")
+        print('Reached end of file. No more data to show.')
         print('-'*50+'\n')
 
 
@@ -287,5 +287,5 @@ def main():
             break
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
 	main()
